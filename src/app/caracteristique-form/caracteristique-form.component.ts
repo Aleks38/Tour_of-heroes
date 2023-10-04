@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-caracteristique-form',
@@ -8,8 +8,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class CaracteristiqueFormComponent {
   caracteristiqueForm = new FormGroup({
-    attaque: new FormControl(''),
-    degats: new FormControl(''),
+    attaque: new FormControl('', Validators.min(0)),
+    degats: new FormControl(20,),
     esquive: new FormControl(''),
     pv: new FormControl(''),
   });

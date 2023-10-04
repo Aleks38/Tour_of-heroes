@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-hero-detail',
@@ -34,4 +35,11 @@ export class HeroDetailComponent implements OnInit {
   }
 
   protected readonly name = name;
+
+  caracteristiqueForm = new FormGroup({
+    attaque: new FormControl('', Validators.min(0)),
+    degats: new FormControl(20,),
+    esquive: new FormControl(''),
+    pv: new FormControl(''),
+  })
 }
