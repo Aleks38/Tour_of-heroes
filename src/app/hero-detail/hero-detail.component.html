@@ -5,23 +5,32 @@
     <label for="hero-name">Hero name: </label>
     <input id="hero-name" [(ngModel)]="hero.name" placeholder="Hero name"/>
   </div>
-  <form [formGroup]="caracteristiqueForm" >
+  <form [formGroup]="caracteristiqueForm" (ngSubmit)="onFormSubmit()">
     <div>
       <label for="hero-attaque">Hero attaque: </label>
-      <input type="number" id="hero-attaque" [(ngModel)]="hero.attaque" placeholder="Hero attaque" formControlName="attaque"/>
+      <input type="number" id="hero-attaque" min="0" [(ngModel)]="hero.attaque" placeholder="Hero attaque"
+             formControlName="attaque"/>
     </div>
     <div>
       <label for="hero-degats">Hero degats: </label>
-      <input type="number" id="hero-degats" [(ngModel)]="hero.degats" placeholder="Hero degats" formControlName="degats"/>
+      <input type="number" id="hero-degats" min="0" [(ngModel)]="hero.degats" placeholder="Hero degats"
+             formControlName="degats"/>
     </div>
     <div>
       <label for="hero-esquive">Hero esquive: </label>
-      <input type="number" id="hero-esquive" [(ngModel)]="hero.esquive" placeholder="Hero esquive" formControlName="esquive"/>
+      <input type="number" id="hero-esquive" min="0" [(ngModel)]="hero.esquive" placeholder="Hero esquive"
+             formControlName="esquive"/>
     </div>
     <div>
       <label for="hero-pv">Hero pv: </label>
-      <input type="number" id="hero-pv" [(ngModel)]="hero.pv" placeholder="Hero pv" formControlName="pv"/>
+      <input type="number" id="hero-pv" min="0" [(ngModel)]="hero.pv" placeholder="Hero pv" formControlName="pv"/>
     </div>
+
+    <!-- Afficher l'erreur si la somme dépasse 40 -->
+    <div *ngIf="caracteristiqueForm.hasError('totalSumExceeded')">
+      <p class="error-message">La somme des valeurs dépasse 40.</p>
+    </div>
+
     <button type="submit">Submit</button>
   </form>
   <button type="button" (click)="goBack()">go back</button>
