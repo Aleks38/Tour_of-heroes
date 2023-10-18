@@ -1,36 +1,35 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-
-import {Hero} from '../hero';
-import {HeroService} from '../hero.service';
+import {Component} from '@angular/core';
+import {Weapon} from "../weapon";
+import {ActivatedRoute} from "@angular/router";
+import {Location} from "@angular/common";
+import {WeaponService} from "../weapon.service";
 import {AbstractControl, FormControl, FormGroup, ValidatorFn} from "@angular/forms";
 
 @Component({
-  selector: 'app-hero-detail',
-  templateUrl: './hero-detail.component.html',
-  styleUrls: ['./hero-detail.component.css']
+  selector: 'app-weapon-detail',
+  templateUrl: './weapon-detail.component.html',
+  styleUrls: ['./weapon-detail.component.css']
 })
-export class HeroDetailComponent implements OnInit {
-  hero: Hero | undefined;
+export class WeaponDetailComponent {
+  weapon: Weapon | undefined;
 
   constructor(
     private route: ActivatedRoute,
-    private heroService: HeroService,
+    private weaponService: WeaponService,
     private location: Location,
   ) {
   }
 
   ngOnInit(): void {
-    this.getHero();
+    this.getWeapon();
     this.caracteristiqueForm.setValidators(this.validateTotalSum());
 
   }
 
-  getHero(): void {
+  getWeapon(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.heroService.getHero(id)
-      .subscribe(hero => this.hero = hero);
+    this.weaponService.getWeapon(id)
+      .subscribe(weapon => this.weapon = weapon);
   }
 
   goBack(): void {

@@ -10,6 +10,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { CaracteristiqueFormComponent } from './caracteristique-form/caracteristique-form.component';
+import { WeaponsComponent } from './weapons/weapons.component';
+import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,9 @@ import { CaracteristiqueFormComponent } from './caracteristique-form/caracterist
     HeroesComponent,
     HeroDetailComponent,
     MessagesComponent,
-    CaracteristiqueFormComponent
+    CaracteristiqueFormComponent,
+    WeaponsComponent,
+    WeaponDetailComponent
   ],
   bootstrap: [ AppComponent ]
 })
