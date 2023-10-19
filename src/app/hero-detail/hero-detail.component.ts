@@ -3,8 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
 import {Hero} from '../hero';
-import {HeroService} from '../hero.service';
 import {AbstractControl, FormControl, FormGroup, ValidatorFn} from "@angular/forms";
+import {HeroInterfaceService} from "../hero-interface.service";
 
 @Component({
   selector: 'app-hero-detail',
@@ -16,7 +16,7 @@ export class HeroDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private heroService: HeroService,
+    private heroInterfaceService: HeroInterfaceService,
     private location: Location,
   ) {
   }
@@ -28,8 +28,8 @@ export class HeroDetailComponent implements OnInit {
   }
 
   getHero(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.heroService.getHero(id)
+    const id = String(this.route.snapshot.paramMap.get('id'));
+    this.heroInterfaceService.getHero(id)
       .subscribe(hero => this.hero = hero);
   }
 
