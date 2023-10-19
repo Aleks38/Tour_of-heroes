@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tour-of-heroes-128cb": {
+      "hosting": {
+        "Tour-of-Heroes": [
+          "tour-of-heroes-128cb"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tour-of-heroes-128cb"
+  }
+}
