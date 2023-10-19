@@ -1,17 +1,19 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { HeroesComponent } from './heroes/heroes.component';
-import { MessagesComponent } from './messages/messages.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
-import { CaracteristiqueFormComponent } from './caracteristique-form/caracteristique-form.component';
-import { WeaponsComponent } from './weapons/weapons.component';
-import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
+import {AppComponent} from './app.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {HeroDetailComponent} from './hero-detail/hero-detail.component';
+import {HeroesComponent} from './heroes/heroes.component';
+import {MessagesComponent} from './messages/messages.component';
+import {AppRoutingModule} from './app-routing.module';
+import {CaracteristiqueFormComponent} from './caracteristique-form/caracteristique-form.component';
+import {WeaponsComponent} from './weapons/weapons.component';
+import {WeaponDetailComponent} from './weapon-detail/weapon-detail.component';
+import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
+import {environment} from "../environments/environment";
+import {getFirestore, provideFirestore} from "@angular/fire/firestore";
 
 @NgModule({
   imports: [
@@ -19,6 +21,8 @@ import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
   ],
   declarations: [
     AppComponent,
@@ -30,6 +34,7 @@ import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
     WeaponsComponent,
     WeaponDetailComponent
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
