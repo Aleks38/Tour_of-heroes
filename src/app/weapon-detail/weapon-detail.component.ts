@@ -98,4 +98,9 @@ export class WeaponDetailComponent {
       this.pv.setValue(40 - (this.attaque.value - this.degats.value - this.esquive.value))
     }
   }
+
+  pointToGive(): number {
+    const rest = 40 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value)
+    return rest
+  }
 }

@@ -27,10 +27,7 @@
              (ngModelChange)="checkPV()"/>
     </div>
 
-    <!-- Afficher l'erreur si la somme dépasse 40 -->
-    <div *ngIf="caracteristiqueForm.hasError('totalSumExceeded')">
-      <p>Il faut afficher la valeure restante.</p>
-    </div>
+    <p>Nombre de point à assigner : {{ pointToGive() }}</p>
 
     <button type="submit">Submit</button>
   </form>
