@@ -10,7 +10,7 @@ import {WeaponInterfaceService} from "../weapon-interface.service";
 export class WeaponsComponent {
   weapons: Weapon[] = [];
 
-  constructor(private weaponService: WeaponInterfaceService) {
+  constructor(private weaponInterfaceService: WeaponInterfaceService) {
   }
 
   ngOnInit(): void {
@@ -18,9 +18,12 @@ export class WeaponsComponent {
   }
 
   getWeapons(): void {
-    this.weaponService.getWeapons()
+    this.weaponInterfaceService.getWeapons()
       .subscribe(weapons => this.weapons = weapons);
   }
 
+  deleteWeapon(id: string): void {
+    this.weaponInterfaceService.deleteWeapon(id);
+  }
 
 }

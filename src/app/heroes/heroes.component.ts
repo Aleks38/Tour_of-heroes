@@ -11,7 +11,7 @@ import {HeroInterfaceService} from "../hero-interface.service";
 export class HeroesComponent implements OnInit {
   heroes: Hero[] = [];
 
-  constructor(private heroService: HeroInterfaceService) {
+  constructor(private heroInterfaceService: HeroInterfaceService) {
   }
 
   ngOnInit(): void {
@@ -19,7 +19,11 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes(): void {
-    this.heroService.getHeroes()
+    this.heroInterfaceService.getHeroes()
       .subscribe(heroes => this.heroes = heroes);
+  }
+
+  deleteHero(id: string): void {
+    this.heroInterfaceService.deleteHero(id);
   }
 }

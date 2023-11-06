@@ -2,7 +2,8 @@
 <ul class="weapons">
   <li *ngFor="let weapon of weapons">
     <a routerLink="/weapon/detail/{{weapon.id}}">
-      <span class="badge">{{weapon.id}}</span> {{weapon.name}}
+      <span class="badge">|</span> {{weapon.name}}
     </a>
+    <button id="delete-button" (click)="deleteWeapon(weapon.id.toString())">x</button>
   </li>
 </ul>
