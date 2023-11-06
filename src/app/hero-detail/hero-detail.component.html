@@ -29,7 +29,7 @@
 
     <p>Nombre de point à assigner : {{ pointToGive() }}</p>
 
-    <button type="submit">Submit</button>
+    <button type="submit" [disabled]="updateHero">Submit</button>
   </form>
   <button type="button" (click)="goBack()">go back</button>
 </div>

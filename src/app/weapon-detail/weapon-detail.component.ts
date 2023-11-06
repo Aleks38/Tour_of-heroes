@@ -12,6 +12,7 @@ import {AbstractControl, FormControl, FormGroup, ValidatorFn} from "@angular/for
 })
 export class WeaponDetailComponent {
   weapon: Weapon | undefined;
+  updateWeapon = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,12 +51,14 @@ export class WeaponDetailComponent {
 
   validateTotalSum(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
+      this.updateWeapon = true;
 
       // Calculez la somme des valeurs
       const totalSum = this.attaque.value + this.degats.value + this.esquive.value + this.pv.value;
 
       // Comparez la somme avec la limite (40) et renvoyez une erreur si elle est dépassée
       if (totalSum == 0) {
+        this.updateWeapon = false;
         return {totalSumExceeded: true};
       }
 
@@ -103,4 +106,9 @@ export class WeaponDetailComponent {
     const rest = 0 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value)
     return rest
   }
+
+  // stateButton(): void {
+  //   if
+  // }
+
 }

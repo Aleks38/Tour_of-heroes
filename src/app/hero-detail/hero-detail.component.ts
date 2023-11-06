@@ -13,6 +13,7 @@ import {HeroInterfaceService} from "../hero-interface.service";
 })
 export class HeroDetailComponent implements OnInit {
   hero: Hero | undefined;
+  updateHero = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,13 +52,15 @@ export class HeroDetailComponent implements OnInit {
 
   validateTotalSum(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
+      this.updateHero = true;
 
       // Calculez la somme des valeurs
       const totalSum = this.attaque.value + this.degats.value + this.esquive.value + this.pv.value;
+      
+      console.log(totalSum);
 
-      // Comparez la somme avec la limite (40) et renvoyez une erreur si elle est dépassée
-      if (totalSum == 40) {
-        return {totalSumExceeded: true};
+      if (totalSum > 0 && totalSum < 41) {
+        this.updateHero = false;
       }
 
       return null; // Aucune erreur, la somme est inférieure à 40
@@ -71,32 +74,32 @@ export class HeroDetailComponent implements OnInit {
   checkAttaque(): void {
     if (this.attaque.value < 1) {
       this.attaque.setValue(1)
-    } else if (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value > 40) {
-      this.attaque.setValue(40 - (this.degats.value + this.esquive.value + this.pv.value))
+    } else if (this.attaque.value > 40) {
+      this.attaque.setValue(40)
     }
   }
 
   checkDegat(): void {
     if (this.degats.value < 1) {
       this.degats.setValue(1)
-    } else if (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value > 40) {
-      this.degats.setValue(40 - (this.attaque.value - this.esquive.value - this.pv.value))
+    } else if (this.degats.value > 40) {
+      this.degats.setValue(40)
     }
   }
 
   checkEsquive(): void {
     if (this.esquive.value < 1) {
       this.esquive.setValue(1)
-    } else if (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value > 40) {
-      this.esquive.setValue(40 - (this.attaque.value - this.degats.value - this.pv.value))
+    } else if (this.esquive.value > 40) {
+      this.esquive.setValue(40)
     }
   }
 
   checkPV(): void {
     if (this.pv.value < 1) {
       this.pv.setValue(1)
-    } else if (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value > 40) {
-      this.pv.setValue(40 - (this.attaque.value - this.degats.value - this.esquive.value))
+    } else if (this.pv.value > 40) {
+      this.pv.setValue(40)
     }
   }
 
