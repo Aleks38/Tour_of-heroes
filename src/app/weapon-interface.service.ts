@@ -1,5 +1,14 @@
 import {Injectable} from '@angular/core';
-import {collection, collectionData, deleteDoc, doc, docData, Firestore} from "@angular/fire/firestore";
+import {
+  addDoc,
+  collection,
+  collectionData,
+  deleteDoc,
+  doc,
+  docData,
+  Firestore,
+  updateDoc
+} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
 import {Weapon} from "./weapon";
 
@@ -36,5 +45,26 @@ export class WeaponInterfaceService {
     const weaponDocument = doc(this.firestore, WeaponInterfaceService.url + "/" + id);
     //
     return deleteDoc(weaponDocument);
+  }
+
+  addWeapon(weapon: Weapon): void {
+    // get a reference to the hero collection
+    const heroCollection = collection(this.firestore, WeaponInterfaceService.url);
+    //
+    addDoc(heroCollection, weapon);
+  }
+
+  updateWeapon(weapon: Weapon): void {
+    // Récupération du DocumentReference
+    const heroDocument = doc(this.firestore, WeaponInterfaceService.url + "/" + weapon.id);
+    // Update du document à partir du JSON et du documentReference
+    let newHeroJSON = {
+      name: weapon.name,
+      attaque: weapon.attaque,
+      esquive: weapon.esquive,
+      degats: weapon.degats,
+      pv: weapon.pv
+    };
+    updateDoc(heroDocument, newHeroJSON);
   }
 }

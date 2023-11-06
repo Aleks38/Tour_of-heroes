@@ -108,7 +108,6 @@ export class HeroDetailComponent implements OnInit {
 
   updateHero(): void {
     if (this.hero) {
-      console.log('test')
       this.heroInterfaceService.updateHero(this.hero);
     }
   }

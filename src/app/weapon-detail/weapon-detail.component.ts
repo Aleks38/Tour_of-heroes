@@ -108,7 +108,9 @@ export class WeaponDetailComponent {
   }
 
   updateWeapon(): void {
-    
+    if (this.weapon) {
+      this.weaponInterfaceService.updateWeapon(this.weapon)
+    }
   }
 
 }
