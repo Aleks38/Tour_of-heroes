@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Weapon} from "../weapon";
-import {WeaponService} from "../weapon.service";
+import {WeaponInterfaceService} from "../weapon-interface.service";
 
 @Component({
   selector: 'app-weapons',
@@ -10,7 +10,7 @@ import {WeaponService} from "../weapon.service";
 export class WeaponsComponent {
   weapons: Weapon[] = [];
 
-  constructor(private weaponService: WeaponService) {
+  constructor(private weaponService: WeaponInterfaceService) {
   }
 
   ngOnInit(): void {

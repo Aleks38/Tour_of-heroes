@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Weapon} from "../weapon";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
-import {WeaponService} from "../weapon.service";
+import {WeaponInterfaceService} from "../weapon-interface.service";
 import {AbstractControl, FormControl, FormGroup, ValidatorFn} from "@angular/forms";
 
 @Component({
@@ -15,7 +15,7 @@ export class WeaponDetailComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private weaponService: WeaponService,
+    private weaponInterfaceService: WeaponInterfaceService,
     private location: Location,
   ) {
   }
@@ -27,8 +27,8 @@ export class WeaponDetailComponent {
   }
 
   getWeapon(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.weaponService.getWeapon(id)
+    const id = String(this.route.snapshot.paramMap.get('id'));
+    this.weaponInterfaceService.getWeapon(id)
       .subscribe(weapon => this.weapon = weapon);
   }
 
@@ -55,7 +55,7 @@ export class WeaponDetailComponent {
       const totalSum = this.attaque.value + this.degats.value + this.esquive.value + this.pv.value;
 
       // Comparez la somme avec la limite (40) et renvoyez une erreur si elle est dépassée
-      if (totalSum == 40) {
+      if (totalSum == 0) {
         return {totalSumExceeded: true};
       }
 
@@ -68,39 +68,39 @@ export class WeaponDetailComponent {
   }
 
   checkAttaque(): void {
-    if (this.attaque.value < 1) {
-      this.attaque.setValue(1)
-    } else if (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value > 40) {
-      this.attaque.setValue(40 - (this.degats.value + this.esquive.value + this.pv.value))
+    if (this.attaque.value < -5) {
+      this.attaque.setValue(-5)
+    } else if (this.attaque.value > 5) {
+      this.attaque.setValue(5)
     }
   }
 
   checkDegat(): void {
-    if (this.degats.value < 1) {
-      this.degats.setValue(1)
-    } else if (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value > 40) {
-      this.degats.setValue(40 - (this.attaque.value - this.esquive.value - this.pv.value))
+    if (this.degats.value < -5) {
+      this.degats.setValue(-5)
+    } else if (this.degats.value > 5) {
+      this.degats.setValue(5)
     }
   }
 
   checkEsquive(): void {
-    if (this.esquive.value < 1) {
-      this.esquive.setValue(1)
-    } else if (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value > 40) {
-      this.esquive.setValue(40 - (this.attaque.value - this.degats.value - this.pv.value))
+    if (this.esquive.value < -5) {
+      this.esquive.setValue(-5)
+    } else if (this.esquive.value > 5) {
+      this.esquive.setValue(5)
     }
   }
 
   checkPV(): void {
-    if (this.pv.value < 1) {
-      this.pv.setValue(1)
-    } else if (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value > 40) {
-      this.pv.setValue(40 - (this.attaque.value - this.degats.value - this.esquive.value))
+    if (this.pv.value < -5) {
+      this.pv.setValue(-5)
+    } else if (this.pv.value > 5) {
+      this.pv.setValue(5)
     }
   }
 
   pointToGive(): number {
-    const rest = 40 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value)
+    const rest = 0 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value)
     return rest
   }
 }

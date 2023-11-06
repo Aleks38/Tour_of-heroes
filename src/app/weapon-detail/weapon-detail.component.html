@@ -8,22 +8,22 @@
   <form [formGroup]="caracteristiqueForm" (ngSubmit)="onFormSubmit()">
     <div>
       <label for="weapon-attaque">Weapon attaque: </label>
-      <input type="number" id="weapon-attaque" min="0" [(ngModel)]="weapon.attaque" placeholder="Weapon attaque"
+      <input type="number" id="weapon-attaque" [(ngModel)]="weapon.attaque" placeholder="Weapon attaque"
              formControlName="attaque" (ngModelChange)="checkAttaque()"/>
     </div>
     <div>
       <label for="weapon-degats">Weapon degats: </label>
-      <input type="number" id="weapon-degats" min="0" [(ngModel)]="weapon.degats" placeholder="Weapon degats"
+      <input type="number" id="weapon-degats" [(ngModel)]="weapon.degats" placeholder="Weapon degats"
              formControlName="degats" (ngModelChange)="checkDegat()"/>
     </div>
     <div>
       <label for="weapon-esquive">Weapon esquive: </label>
-      <input type="number" id="weapon-esquive" min="0" [(ngModel)]="weapon.esquive" placeholder="Weapon esquive"
+      <input type="number" id="weapon-esquive" [(ngModel)]="weapon.esquive" placeholder="Weapon esquive"
              formControlName="esquive" (ngModelChange)="checkEsquive()"/>
     </div>
     <div>
       <label for="weapon-pv">Weapon pv: </label>
-      <input type="number" id="weapon-pv" min="0" [(ngModel)]="weapon.pv" placeholder="Weapon pv" formControlName="pv"
+      <input type="number" id="weapon-pv" [(ngModel)]="weapon.pv" placeholder="Weapon pv" formControlName="pv"
              (ngModelChange)="checkPV()"/>
     </div>
 
