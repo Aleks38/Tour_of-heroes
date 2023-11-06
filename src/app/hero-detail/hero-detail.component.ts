@@ -13,7 +13,7 @@ import {HeroInterfaceService} from "../hero-interface.service";
 })
 export class HeroDetailComponent implements OnInit {
   hero: Hero | undefined;
-  updateHero = true;
+  stateHeroButton = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,15 +52,13 @@ export class HeroDetailComponent implements OnInit {
 
   validateTotalSum(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      this.updateHero = true;
+      this.stateHeroButton = true;
 
       // Calculez la somme des valeurs
       const totalSum = this.attaque.value + this.degats.value + this.esquive.value + this.pv.value;
-      
-      console.log(totalSum);
 
       if (totalSum > 0 && totalSum < 41) {
-        this.updateHero = false;
+        this.stateHeroButton = false;
       }
 
       return null; // Aucune erreur, la somme est inférieure à 40
@@ -106,5 +104,12 @@ export class HeroDetailComponent implements OnInit {
   pointToGive(): number {
     const rest = 40 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value);
     return rest;
+  }
+
+  updateHero(): void {
+    if (this.hero) {
+      console.log('test')
+      this.heroInterfaceService.updateHero(this.hero);
+    }
   }
 }

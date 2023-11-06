@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {collection, collectionData, deleteDoc, doc, docData, Firestore} from "@angular/fire/firestore";
+import {addDoc, collection, collectionData, doc, docData, Firestore, updateDoc} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
 import {Hero} from "./hero";
 
@@ -31,10 +31,18 @@ export class HeroInterfaceService {
     return docData(heroDocument, {idField: 'id'}) as Observable<Hero>;
   }
 
-  deleteHero(id: string): Promise<void> {
-    // Récupération du DocumentReference
-    const heroDocument = doc(this.firestore, HeroInterfaceService.url + "/" + id);
+  addHero(hero: Hero): void {
+    // get a reference to the hero collection
+    const heroCollection = collection(this.firestore, HeroInterfaceService.url);
     //
-    return deleteDoc(heroDocument);
+    addDoc(heroCollection, hero);
+  }
+
+  updateHero(hero: Hero): void {
+    // Récupération du DocumentReference
+    const heroDocument = doc(this.firestore, HeroInterfaceService.url + "/" + hero.id);
+    // Update du document à partir du JSON et du documentReference
+    let newHeroJSON = {name: hero.name, attaque: hero.attaque, esquive: hero.esquive, degats: hero.degats, pv: hero.pv};
+    updateDoc(heroDocument, newHeroJSON);
   }
 }
