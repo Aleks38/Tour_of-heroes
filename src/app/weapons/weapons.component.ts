@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Weapon} from "../weapon";
 import {WeaponInterfaceService} from "../weapon-interface.service";
 
@@ -7,7 +7,7 @@ import {WeaponInterfaceService} from "../weapon-interface.service";
   templateUrl: './weapons.component.html',
   styleUrls: ['./weapons.component.css']
 })
-export class WeaponsComponent {
+export class WeaponsComponent implements OnInit {
   weapons: Weapon[] = [];
 
   constructor(private weaponInterfaceService: WeaponInterfaceService) {

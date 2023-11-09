@@ -29,7 +29,25 @@
 
     <p>Nombre de point à assigner : {{ pointToGive() }}</p>
 
-    <button [disabled]="stateHeroButton" (click)="updateHero()">Submit</button>
   </form>
+  <div>
+    <div *ngIf="hero.idWeapon; else elseBlock">
+      <label>{{ findWeapon() }}</label>
+
+      <button (click)="deleteWeapon()">Delete Weapon</button>
+    </div>
+    <ng-template #elseBlock>
+      <label>Armes selectionner :</label>
+
+      <select id="weapons" [(ngModel)]="selectedWeapon">
+        <option [ngValue]="" selected>Aucune arme selectionner</option>
+        <option *ngFor="let weapon of weapons" [ngValue]="weapon">{{ weapon.name }}</option>
+      </select>
+    </ng-template>
+  </div>
+
+
+  <button [disabled]="stateHeroButton" (click)="updateHero()">Submit</button>
+
   <button type="button" (click)="goBack()">go back</button>
 </div>

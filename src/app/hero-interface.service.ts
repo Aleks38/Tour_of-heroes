@@ -51,7 +51,14 @@ export class HeroInterfaceService {
     // Récupération du DocumentReference
     const heroDocument = doc(this.firestore, HeroInterfaceService.url + "/" + hero.id);
     // Update du document à partir du JSON et du documentReference
-    let newHeroJSON = {name: hero.name, attaque: hero.attaque, esquive: hero.esquive, degats: hero.degats, pv: hero.pv};
+    let newHeroJSON = {
+      name: hero.name,
+      attaque: hero.attaque,
+      esquive: hero.esquive,
+      degats: hero.degats,
+      pv: hero.pv,
+      idWeapon: hero.idWeapon,
+    };
     updateDoc(heroDocument, newHeroJSON);
   }
 

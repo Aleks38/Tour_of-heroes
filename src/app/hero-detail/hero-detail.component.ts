@@ -5,6 +5,8 @@ import {Location} from '@angular/common';
 import {Hero} from '../hero';
 import {AbstractControl, FormControl, FormGroup, ValidatorFn} from "@angular/forms";
 import {HeroInterfaceService} from "../hero-interface.service";
+import {Weapon} from "../weapon";
+import {WeaponInterfaceService} from "../weapon-interface.service";
 
 @Component({
   selector: 'app-hero-detail',
@@ -14,18 +16,22 @@ import {HeroInterfaceService} from "../hero-interface.service";
 export class HeroDetailComponent implements OnInit {
   hero: Hero | undefined;
   stateHeroButton = true;
+  weapons: Weapon[] = [];
+  selectedWeapon?: Weapon;
+  weapon?: Weapon;
 
   constructor(
     private route: ActivatedRoute,
     private heroInterfaceService: HeroInterfaceService,
     private location: Location,
+    private weaponInterfaceService: WeaponInterfaceService
   ) {
   }
 
   ngOnInit(): void {
     this.getHero();
     this.caracteristiqueForm.setValidators(this.validateTotalSum());
-
+    this.getWeapon();
   }
 
   getHero(): void {
@@ -107,8 +113,31 @@ export class HeroDetailComponent implements OnInit {
   }
 
   updateHero(): void {
+    if (this.hero && this.selectedWeapon) {
+      this.hero.idWeapon = this.selectedWeapon.id.toString();
+    }
     if (this.hero) {
       this.heroInterfaceService.updateHero(this.hero);
     }
+  }
+
+  getWeapon(): void {
+    this.weaponInterfaceService.getWeapons().subscribe(weapons => this.weapons = weapons)
+  }
+
+  deleteWeapon(): void {
+    if (this.hero) {
+      this.hero.idWeapon = ""
+    }
+    this.updateHero()
+  }
+
+  findWeapon(): string {
+    if (this.hero) {
+      this.weaponInterfaceService.getWeapon(this.hero?.idWeapon).subscribe(weapon => this.weapon = weapon)
+      if (this.weapon)
+        return this.weapon.name;
+    }
+    return ''
   }
 }
