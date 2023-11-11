@@ -44,6 +44,7 @@ export class HeroesComponent implements OnInit {
 
   resetSearchBar(): void {
     this.searchTerm = ''
+    this.getHeroes()
   }
 
   deleteHero(id: string): void {

@@ -11,13 +11,14 @@ export class WeaponsComponent implements OnInit {
   weapons: Weapon[] = [];
   parametresTri: string[] = ['attaque', 'esquive', 'degats', 'pv'];
   selectedParametreTri?: string;
+  searchTerm: string = '';
 
   constructor(private weaponInterfaceService: WeaponInterfaceService) {
   }
 
   ngOnInit(): void {
     this.selectedParametreTri = this.parametresTri[0];
-    this.getWeaponsOrderBy();
+    this.getWeapons();
   }
 
   getWeapons(): void {
@@ -26,12 +27,24 @@ export class WeaponsComponent implements OnInit {
   }
 
   getWeaponsOrderBy(): void {
-    this.weaponInterfaceService.getWeapons()
-      .subscribe(weapons => {
-        // Triez les héros en fonction du paramètre sélectionné
-        // @ts-ignore
-        this.weapons = weapons.sort((a, b) => b[this.selectedParametreTri] - a[this.selectedParametreTri]);
-      });
+    // @ts-ignore
+    this.weapons = weapons.sort((a, b) => b[this.selectedParametreTri] - a[this.selectedParametreTri]);
+
+  }
+
+  onSearch(): void {
+    if (this.searchTerm != '') {
+      this.weapons = this.weapons.filter((hero) =>
+        hero.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.getWeaponsOrderBy()
+    }
+  }
+
+  resetSearchBar(): void {
+    this.searchTerm = ''
+    this.getWeapons()
   }
 
   deleteWeapon(id: string): void {
