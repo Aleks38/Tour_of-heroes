@@ -12,15 +12,14 @@ export class HeroesComponent implements OnInit {
   heroes: Hero[] = [];
   parametresTri: string[] = ['attaque', 'esquive', 'degats', 'pv'];
   selectedParametreTri?: string;
-
-  // hero: Hero | undefined;
+  searchTerm: string = '';
 
   constructor(private heroInterfaceService: HeroInterfaceService) {
   }
 
   ngOnInit(): void {
     this.selectedParametreTri = this.parametresTri[0];
-    this.getHeroesOrderBy();
+    this.getHeroes();
   }
 
   getHeroes(): void {
@@ -28,13 +27,23 @@ export class HeroesComponent implements OnInit {
       .subscribe(heroes => this.heroes = heroes);
   }
 
-  getHeroesOrderBy(): void {
-    this.heroInterfaceService.getHeroes()
-      .subscribe(heroes => {
-        // Triez les héros en fonction du paramètre sélectionné
-        // @ts-ignore
-        this.heroes = heroes.sort((a, b) => b[this.selectedParametreTri] - a[this.selectedParametreTri]);
-      });
+  getHeroesOrderByType(): void {
+    // @ts-ignore
+    this.heroes = this.heroes.sort((a, b) => b[this.selectedParametreTri] - a[this.selectedParametreTri]);
+  }
+
+  onSearch(): void {
+    if (this.searchTerm != '') {
+      this.heroes = this.heroes.filter((hero) =>
+        hero.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.getHeroesOrderByType()
+    }
+  }
+
+  resetSearchBar(): void {
+    this.searchTerm = ''
   }
 
   deleteHero(id: string): void {
@@ -43,7 +52,7 @@ export class HeroesComponent implements OnInit {
 
   onParametreTriChange(): void {
     // Réagir au changement du paramètre de tri
-    this.getHeroesOrderBy();
+    this.getHeroesOrderByType();
   }
 
   createNewHero(): void {
