@@ -13,6 +13,8 @@ export class HeroesComponent implements OnInit {
   parametresTri: string[] = ['attaque', 'esquive', 'degats', 'pv'];
   selectedParametreTri?: string;
 
+  // hero: Hero | undefined;
+
   constructor(private heroInterfaceService: HeroInterfaceService) {
   }
 
@@ -43,4 +45,19 @@ export class HeroesComponent implements OnInit {
     // Réagir au changement du paramètre de tri
     this.getHeroesOrderBy();
   }
+
+  createNewHero(): void {
+    const newHero: Hero = {
+      id: 0,
+      name: 'New',
+      attaque: 0,
+      esquive: 0,
+      degats: 0,
+      pv: 0,
+      idWeapon: '',
+    };
+
+    this.heroInterfaceService.addHero(newHero);
+  }
+
 }

@@ -43,4 +43,17 @@ export class WeaponsComponent implements OnInit {
     this.getWeaponsOrderBy();
   }
 
+  createNewWeapon(): void {
+    const newWeapon: Weapon = {
+      id: 0,
+      name: 'New',
+      attaque: 0,
+      esquive: 0,
+      degats: 0,
+      pv: 0,
+    };
+
+    this.weaponInterfaceService.addWeapon(newWeapon);
+  }
+
 }

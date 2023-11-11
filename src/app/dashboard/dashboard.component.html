@@ -5,7 +5,7 @@
 <h2>Top Heroes</h2>
 <div class="menu">
   <a *ngFor="let hero of heroes"
-     routerLink="hero/detail/{{hero.id}}">
+     routerLink="/hero/detail/{{hero.id}}">
     {{hero.name}}
   </a>
 </div>
@@ -13,7 +13,7 @@
 <h2>Top Weapon</h2>
 <div class="menu">
   <a *ngFor="let weapon of weapons"
-     routerLink="weapon/detail/{{weapon.id}}">
+     routerLink="/weapon/detail/{{weapon.id}}">
     {{weapon.name}}
   </a>
 </div>
