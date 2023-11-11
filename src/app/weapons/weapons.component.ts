@@ -9,12 +9,15 @@ import {WeaponInterfaceService} from "../weapon-interface.service";
 })
 export class WeaponsComponent implements OnInit {
   weapons: Weapon[] = [];
+  parametresTri: string[] = ['attaque', 'esquive', 'degats', 'pv'];
+  selectedParametreTri?: string;
 
   constructor(private weaponInterfaceService: WeaponInterfaceService) {
   }
 
   ngOnInit(): void {
-    this.getWeapons();
+    this.selectedParametreTri = this.parametresTri[0];
+    this.getWeaponsOrderBy();
   }
 
   getWeapons(): void {
@@ -22,8 +25,22 @@ export class WeaponsComponent implements OnInit {
       .subscribe(weapons => this.weapons = weapons);
   }
 
+  getWeaponsOrderBy(): void {
+    this.weaponInterfaceService.getWeapons()
+      .subscribe(weapons => {
+        // Triez les héros en fonction du paramètre sélectionné
+        // @ts-ignore
+        this.weapons = weapons.sort((a, b) => b[this.selectedParametreTri] - a[this.selectedParametreTri]);
+      });
+  }
+
   deleteWeapon(id: string): void {
     this.weaponInterfaceService.deleteWeapon(id);
+  }
+
+  onParametreTriChange(): void {
+    // Réagir au changement du paramètre de tri
+    this.getWeaponsOrderBy();
   }
 
 }
