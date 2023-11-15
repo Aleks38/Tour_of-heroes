@@ -20,6 +20,17 @@ export class HeroDetailComponent implements OnInit {
   selectedWeapon?: Weapon;
   weapon?: Weapon;
 
+  private attaque: FormControl = new FormControl('');
+  private degats: FormControl = new FormControl('');
+  private esquive: FormControl = new FormControl('');
+  private pv: FormControl = new FormControl('');
+  caracteristiqueForm = new FormGroup({
+    attaque: this.attaque,
+    degats: this.degats,
+    esquive: this.esquive,
+    pv: this.pv,
+  });
+
   constructor(
     private route: ActivatedRoute,
     private heroInterfaceService: HeroInterfaceService,
@@ -43,18 +54,6 @@ export class HeroDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-
-  private attaque: FormControl = new FormControl('');
-  private degats: FormControl = new FormControl('');
-  private esquive: FormControl = new FormControl('');
-  private pv: FormControl = new FormControl('');
-
-  caracteristiqueForm = new FormGroup({
-    attaque: this.attaque,
-    degats: this.degats,
-    esquive: this.esquive,
-    pv: this.pv,
-  });
 
   validateTotalSum(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
@@ -119,6 +118,7 @@ export class HeroDetailComponent implements OnInit {
     if (this.hero) {
       this.heroInterfaceService.updateHero(this.hero);
     }
+    // console.log(this.validateWeapon())
   }
 
   getWeapon(): void {
@@ -139,5 +139,16 @@ export class HeroDetailComponent implements OnInit {
         return this.weapon.name;
     }
     return ''
+  }
+
+  validateWeapon(): boolean {
+    if (this.hero && this.hero.idWeapon != '') {
+      this.weaponInterfaceService.getWeapon(this.hero.idWeapon).subscribe(weapon => {
+        this.weapon = weapon;
+      });
+      return (this.hero.attaque + this.hero.attaque) > 0 && (this.hero.esquive + this.hero.esquive) > 0 && (this.hero.degats + this.hero.degats) > 0 && (this.hero.pv + this.hero.pv) > 0;
+    } else {
+      return false
+    }
   }
 }

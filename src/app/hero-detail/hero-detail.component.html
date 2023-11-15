@@ -54,7 +54,6 @@
       <label>Armes selectionner :</label>
 
       <select [(ngModel)]="selectedWeapon" id="weapons">
-        <option [ngValue]="" selected>Aucune arme selectionner</option>
         <option *ngFor="let weapon of weapons" [ngValue]="weapon">{{ weapon.name }}</option>
       </select>
     </ng-template>
