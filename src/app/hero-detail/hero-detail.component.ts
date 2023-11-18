@@ -7,6 +7,7 @@ import {AbstractControl, FormControl, FormGroup, ValidatorFn} from "@angular/for
 import {HeroInterfaceService} from "../hero-interface.service";
 import {Weapon} from "../weapon";
 import {WeaponInterfaceService} from "../weapon-interface.service";
+import {firstValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-hero-detail',
@@ -17,8 +18,9 @@ export class HeroDetailComponent implements OnInit {
   hero: Hero | undefined;
   stateHeroButton = true;
   weapons: Weapon[] = [];
-  selectedWeapon?: Weapon;
+  selectedWeapon: any;
   weapon?: Weapon;
+  check = true;
 
   private attaque: FormControl = new FormControl('');
   private degats: FormControl = new FormControl('');
@@ -35,7 +37,7 @@ export class HeroDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private heroInterfaceService: HeroInterfaceService,
     private location: Location,
-    private weaponInterfaceService: WeaponInterfaceService
+    private weaponInterfaceService: WeaponInterfaceService,
   ) {
   }
 
@@ -66,9 +68,10 @@ export class HeroDetailComponent implements OnInit {
         this.stateHeroButton = false;
       }
 
-      return null; // Aucune erreur, la somme est inférieure à 40
+      return null;
     };
   }
+
 
   onFormSubmit(): void {
     console.log(this.pv)
@@ -111,11 +114,14 @@ export class HeroDetailComponent implements OnInit {
     return rest;
   }
 
+
   updateHero(): void {
-    if (this.hero && this.selectedWeapon) {
+    if (this.hero && this.selectedWeapon && this.check) {
       this.hero.idWeapon = this.selectedWeapon.id.toString();
     }
     if (this.hero) {
+
+      this.check = true
       this.heroInterfaceService.updateHero(this.hero);
     }
     // console.log(this.validateWeapon())
@@ -127,7 +133,8 @@ export class HeroDetailComponent implements OnInit {
 
   deleteWeapon(): void {
     if (this.hero) {
-      this.hero.idWeapon = ""
+      this.check = false;
+      this.hero.idWeapon = "";
     }
     this.updateHero()
   }
@@ -141,14 +148,41 @@ export class HeroDetailComponent implements OnInit {
     return ''
   }
 
-  validateWeapon(): boolean {
-    if (this.hero && this.hero.idWeapon != '') {
-      this.weaponInterfaceService.getWeapon(this.hero.idWeapon).subscribe(weapon => {
-        this.weapon = weapon;
-      });
-      return (this.hero.attaque + this.hero.attaque) > 0 && (this.hero.esquive + this.hero.esquive) > 0 && (this.hero.degats + this.hero.degats) > 0 && (this.hero.pv + this.hero.pv) > 0;
+  async validateWeapon(): Promise<void> {
+    //FixMe : Il y a un temps de retard entre ce qui est selectionné et ce qu'il y a dans selectedWeapon
+    if (this.hero && this.hero.idWeapon == '') {
+      console.log('tetetete')
+
+      try {
+        // Vérifiez si selectedWeapon n'est pas undefined
+        if (!this.selectedWeapon) {
+          // Gérez le cas où selectedWeapon est undefined
+          console.error('Erreur : selectedWeapon est undefined');
+          this.stateHeroButton = false;
+          return;
+        }
+
+        // Accédez à la valeur sélectionnée dans le menu déroulant
+        console.log('Arme sélectionnée :', this.selectedWeapon);
+
+        const weapon = await firstValueFrom(this.weaponInterfaceService.getWeapon(this.selectedWeapon!.id.toString()));
+
+        if (weapon) {
+          console.log(weapon.attaque)
+          this.stateHeroButton = !((this.hero.attaque + weapon.attaque) > 0 &&
+            (this.hero.esquive + weapon.esquive) > 0 &&
+            (this.hero.degats + weapon.degats) > 0 &&
+            (this.hero.pv + weapon.pv) > 0);
+        } else {
+          this.stateHeroButton = true;
+        }
+
+      } catch (error) {
+        console.error('Erreur lors de la récupération de l\'arme :', error);
+        this.stateHeroButton = true;
+      }
     } else {
-      return false
+      this.stateHeroButton = true;
     }
   }
 }

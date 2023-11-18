@@ -59,6 +59,7 @@ export class HeroInterfaceService {
       pv: hero.pv,
       idWeapon: hero.idWeapon,
     };
+
     updateDoc(heroDocument, newHeroJSON);
   }
 

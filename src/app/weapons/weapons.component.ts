@@ -10,7 +10,7 @@ import {WeaponInterfaceService} from "../weapon-interface.service";
 export class WeaponsComponent implements OnInit {
   weapons: Weapon[] = [];
   parametresTri: string[] = ['attaque', 'esquive', 'degats', 'pv'];
-  selectedParametreTri?: string;
+  selectedParametreTri = this.parametresTri[0];
   searchTerm: string = '';
 
   constructor(private weaponInterfaceService: WeaponInterfaceService) {
@@ -28,7 +28,7 @@ export class WeaponsComponent implements OnInit {
 
   getWeaponsOrderBy(): void {
     // @ts-ignore
-    this.weapons = weapons.sort((a, b) => b[this.selectedParametreTri] - a[this.selectedParametreTri]);
+    this.weapons = this.weapons.sort((a, b) => b[this.selectedParametreTri] - a[this.selectedParametreTri]);
 
   }
 
