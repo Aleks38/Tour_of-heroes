@@ -53,10 +53,13 @@
     <ng-template #elseBlock>
       <label>Armes selectionner :</label>
 
-      <select (ngModelChange)="validateWeapon()" [(ngModel)]="selectedWeapon" id="weapons">
+      <select [(ngModel)]="selectedWeapon" (ngModelChange)="validateWeapon()"  id="weapons">
         <option *ngFor="let weapon of weapons" [ngValue]="weapon">{{ weapon.name }}</option>
       </select>
 
+      <div *ngIf="weaponIsBad">
+        <p>Vous ne pouvez pas selectionner cette arme</p>
+      </div>
 
     </ng-template>
   </div>

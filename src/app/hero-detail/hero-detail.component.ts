@@ -21,6 +21,7 @@ export class HeroDetailComponent implements OnInit {
   selectedWeapon: any;
   weapon?: Weapon;
   check = true;
+  weaponIsBad = false
 
   private attaque: FormControl = new FormControl('');
   private degats: FormControl = new FormControl('');
@@ -72,11 +73,6 @@ export class HeroDetailComponent implements OnInit {
     };
   }
 
-
-  onFormSubmit(): void {
-    console.log(this.pv)
-  }
-
   checkAttaque(): void {
     if (this.attaque.value < 1) {
       this.attaque.setValue(1)
@@ -110,8 +106,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   pointToGive(): number {
-    const rest = 40 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value);
-    return rest;
+    return 40 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value);
   }
 
 
@@ -124,7 +119,6 @@ export class HeroDetailComponent implements OnInit {
       this.check = true
       this.heroInterfaceService.updateHero(this.hero);
     }
-    // console.log(this.validateWeapon())
   }
 
   getWeapon(): void {
@@ -162,26 +156,26 @@ export class HeroDetailComponent implements OnInit {
           return;
         }
 
-        // Accédez à la valeur sélectionnée dans le menu déroulant
-        console.log('Arme sélectionnée :', this.selectedWeapon);
-
         const weapon = await firstValueFrom(this.weaponInterfaceService.getWeapon(this.selectedWeapon!.id.toString()));
 
         if (weapon) {
-          console.log(weapon.attaque)
           this.stateHeroButton = !((this.hero.attaque + weapon.attaque) > 0 &&
             (this.hero.esquive + weapon.esquive) > 0 &&
             (this.hero.degats + weapon.degats) > 0 &&
             (this.hero.pv + weapon.pv) > 0);
+          this.weaponIsBad = this.stateHeroButton
         } else {
+          this.weaponIsBad = true
           this.stateHeroButton = true;
         }
 
       } catch (error) {
         console.error('Erreur lors de la récupération de l\'arme :', error);
+        this.weaponIsBad = true
         this.stateHeroButton = true;
       }
     } else {
+      this.weaponIsBad = true
       this.stateHeroButton = true;
     }
   }
