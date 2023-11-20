@@ -4,6 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {WeaponInterfaceService} from "../weapon-interface.service";
 import {AbstractControl, FormControl, FormGroup, ValidatorFn} from "@angular/forms";
+import {Hero} from "../hero";
+import {HeroInterfaceService} from "../hero-interface.service";
 
 @Component({
   selector: 'app-weapon-detail',
@@ -11,6 +13,7 @@ import {AbstractControl, FormControl, FormGroup, ValidatorFn} from "@angular/for
   styleUrls: ['./weapon-detail.component.css']
 })
 export class WeaponDetailComponent {
+  heroes: Hero[] = []
   weapon: Weapon | undefined;
   stateWeaponButton = true;
 
@@ -18,13 +21,20 @@ export class WeaponDetailComponent {
     private route: ActivatedRoute,
     private weaponInterfaceService: WeaponInterfaceService,
     private location: Location,
+    private heroInterfaceService: HeroInterfaceService,
   ) {
   }
 
   ngOnInit(): void {
     this.getWeapon();
     this.caracteristiqueForm.setValidators(this.validateTotalSum());
+    this.getHeroesAssociate();
+  }
 
+  getHeroesAssociate(): void {
+    this.heroInterfaceService.getHeroes().subscribe(heroes => {
+      this.heroes = heroes.filter(hero => hero.idWeapon == this.weapon?.id.toString())
+    });
   }
 
   getWeapon(): void {
@@ -103,8 +113,7 @@ export class WeaponDetailComponent {
   }
 
   pointToGive(): number {
-    const rest = 0 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value)
-    return rest
+    return 0 - (this.attaque.value + this.degats.value + this.esquive.value + this.pv.value)
   }
 
   updateWeapon(): void {

@@ -43,4 +43,16 @@
     <button (click)="updateWeapon()" [disabled]="stateWeaponButton" type="submit">Submit</button>
   </form>
   <button (click)="goBack()" type="button">go back</button>
+
+  <div *ngIf="heroes.length > 0">
+    <h2>Les héros qui possède l'arme :</h2>
+    <ul class="heroes">
+      <li *ngFor="let hero of heroes">
+        <a routerLink="/hero/detail/{{hero.id}}">
+          <span class="badge">|</span> {{hero.name}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
 </div>
