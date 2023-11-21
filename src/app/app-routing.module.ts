@@ -15,8 +15,9 @@ const routes: Routes = [
   {path: 'heroes', component: HeroesComponent},
   {path: 'weapon/detail/:id', component: WeaponDetailComponent},
   {path: 'weapons', component: WeaponsComponent},
-  {path: 'auth', component: AuthentificationComponent}
+  {path: 'auth', component: AuthentificationComponent},
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

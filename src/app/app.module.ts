@@ -14,8 +14,8 @@ import {WeaponDetailComponent} from './weapon-detail/weapon-detail.component';
 import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
 import {environment} from "../environments/environment";
 import {getFirestore, provideFirestore} from "@angular/fire/firestore";
-import {AngularFireAuthModule} from "@angular/fire/compat/auth";
-import { AuthentificationComponent } from './authentification/authentification.component';
+import {AuthentificationComponent} from "./authentification/authentification.component";
+import {getAuth, provideAuth} from "@angular/fire/auth";
 
 @NgModule({
   imports: [
@@ -25,7 +25,7 @@ import { AuthentificationComponent } from './authentification/authentification.c
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
-    AngularFireAuthModule,
+    provideAuth(() => getAuth()),
   ],
   declarations: [
     AppComponent,
@@ -36,7 +36,7 @@ import { AuthentificationComponent } from './authentification/authentification.c
     CaracteristiqueFormComponent,
     WeaponsComponent,
     WeaponDetailComponent,
-    AuthentificationComponent
+    AuthentificationComponent,
   ],
   bootstrap: [AppComponent]
 })

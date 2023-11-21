@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {AuthService} from "../auth.service";
+import {AuthService, LoginData} from "../auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-authentification',
@@ -7,9 +8,12 @@ import {AuthService} from "../auth.service";
   styleUrls: ['./authentification.component.css']
 })
 export class AuthentificationComponent {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
-  login(email: string, password: string) {
-    this.authService.login(email, password);
+  login(loginData: LoginData) {
+    this.authService
+      .login(loginData)
+      .then(() => this.router.navigate(['/dashboard']))
+      .catch((e) => console.log(e.message));
   }
 }

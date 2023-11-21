@@ -1,45 +1,28 @@
 import { Injectable } from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "@angular/fire/auth";
+
+export interface LoginData {
+  email: string;
+  password: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth) { }
+  constructor(private auth: Auth) { }
 
-  get isAuthenticated(): boolean {
-    return this.afAuth.currentUser !== null;
+  login({ email, password }: LoginData) {
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  signUp(email: string, password: string) {
-    this.afAuth.createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        // Sign up successful
-      })
-      .catch((error) => {
-        // An error occurred
-      });
-  }
-
-  login(email: string, password: string) {
-    this.afAuth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        // Login successful
-      })
-      .catch((error) => {
-        // An error occurred
-      });
+  register({ email, password }: LoginData) {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
   logout() {
-    this.afAuth.signOut()
-      .then(() => {
-        // Logout successful
-      })
-      .catch((error) => {
-        // An error occurred
-      });
+    return signOut(this.auth);
   }
 }
 
