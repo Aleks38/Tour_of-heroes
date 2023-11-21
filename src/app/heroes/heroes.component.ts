@@ -70,4 +70,12 @@ export class HeroesComponent implements OnInit {
     this.heroInterfaceService.addHero(newHero);
   }
 
+  deleteHeroConfirmation(heroId: string): void {
+    const isConfirmed = window.confirm('Êtes-vous sûr de vouloir supprimer ce héro ?');
+
+    if (isConfirmed) {
+      this.deleteHero(heroId);
+    }
+  }
+
 }

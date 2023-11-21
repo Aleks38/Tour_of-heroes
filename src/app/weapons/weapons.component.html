@@ -13,7 +13,7 @@
     <a routerLink="/weapon/detail/{{weapon.id}}">
       <span class="badge">|</span> {{weapon.name}}
     </a>
-    <button (click)="deleteWeapon(weapon.id.toString())" id="delete-button">x</button>
+    <button (click)="deleteWeaponConfirmation(weapon.id.toString())" id="delete-button">x</button>
   </li>
 </ul>
 <button (click)="createNewWeapon()">

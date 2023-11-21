@@ -69,4 +69,12 @@ export class WeaponsComponent implements OnInit {
     this.weaponInterfaceService.addWeapon(newWeapon);
   }
 
+  deleteWeaponConfirmation(weaponId: string): void {
+    const isConfirmed = window.confirm('Êtes-vous sûr de vouloir supprimer ce weapon ?');
+
+    if (isConfirmed) {
+      this.deleteWeapon(weaponId);
+    }
+  }
+
 }

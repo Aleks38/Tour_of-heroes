@@ -13,7 +13,7 @@
     <a routerLink="/hero/detail/{{hero.id}}">
       <span class="badge">|</span> {{hero.name}}
     </a>
-    <button (click)="deleteHero(hero.id.toString())" id="delete-button">x</button>
+    <button (click)="deleteHeroConfirmation(hero.id.toString())" id="delete-button">x</button>
   </li>
 </ul>
 <button (click)="createNewHero()">
