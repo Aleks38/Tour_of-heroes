@@ -11,23 +11,63 @@
       <input (ngModelChange)="checkAttaque()" [(ngModel)]="hero.attaque" formControlName="attaque" id="hero-attaque"
              min="0"
              placeholder="Hero attaque" type="number"/>
+      <label *ngIf="weapon">
+        <label *ngIf="weapon.attaque >= 0; else elseBlock">
+          +{{ weapon.attaque }}
+        </label>
+        <ng-template #elseBlock>
+          <label>
+            {{ weapon.attaque }}
+          </label>
+        </ng-template>
+      </label>
     </div>
     <div>
       <label for="hero-degats">Hero degats: </label>
       <input (ngModelChange)="checkDegat()" [(ngModel)]="hero.degats" formControlName="degats" id="hero-degats" min="0"
              placeholder="Hero degats" type="number"/>
+      <label *ngIf="weapon">
+        <label *ngIf="weapon.degats >= 0; else elseBlock">
+          +{{ weapon.degats }}
+        </label>
+        <ng-template #elseBlock>
+          <label>
+            {{ weapon.degats }}
+          </label>
+        </ng-template>
+      </label>
     </div>
     <div>
       <label for="hero-esquive">Hero esquive: </label>
       <input (ngModelChange)="checkEsquive()" [(ngModel)]="hero.esquive" formControlName="esquive" id="hero-esquive"
              min="0"
              placeholder="Hero esquive" type="number"/>
+      <label *ngIf="weapon">
+        <label *ngIf="weapon.esquive >= 0; else elseBlock">
+          +{{ weapon.esquive }}
+        </label>
+        <ng-template #elseBlock>
+          <label>
+            {{ weapon.esquive }}
+          </label>
+        </ng-template>
+      </label>
     </div>
     <div>
       <label for="hero-pv">Hero pv: </label>
       <input (ngModelChange)="checkPV()" [(ngModel)]="hero.pv" formControlName="pv" id="hero-pv" min="0"
              placeholder="Hero pv"
              type="number"/>
+      <label *ngIf="weapon">
+        <label *ngIf="weapon.pv >= 0; else elseBlock">
+          +{{ weapon.pv }}
+        </label>
+        <ng-template #elseBlock>
+          <label>
+            {{ weapon.pv }}
+          </label>
+        </ng-template>
+      </label>
     </div>
 
     <div>
